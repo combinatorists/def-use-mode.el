@@ -177,6 +177,7 @@ available commands."
         (ring-insert def-use-marker-ring (point-marker))
         (def-use-goto-ref (car refs) other-window)))))
 
+;;;###autoload
 (defun def-use-jump-to-prev (&optional other-window)
   "Jumps to the prev use (or def) of the symbol under the cursor."
   (interactive "P")
@@ -224,6 +225,7 @@ the symbol."
             ("[(return)]" . ,(function def-use-list-view-ref))))
     result))
 
+;;;###autoload
 (define-derived-mode def-use-list-mode fundamental-mode "Def-Use-List"
   "Major mode for browsing def-use lists."
   :group 'def-use-list)
@@ -231,6 +233,7 @@ the symbol."
 (defvar def-use-list-ref-to-overlay-alist nil)
 (defvar def-use-list-sym nil)
 
+;;;###autoload
 (defun def-use-list-all-refs (&optional reverse)
   "Lists all references to the symbol under the cursor."
   (interactive "P")
@@ -246,7 +249,7 @@ the symbol."
           (buffer-disable-undo)
           (def-use-list-mode)
           (add-hook
-            'kill-buffer-hook (function def-use-list-view-unmark-all) nil t)
+           'kill-buffer-hook (function def-use-list-view-unmark-all) nil t)
           (set (make-local-variable 'def-use-list-sym)
                sym)
           (insert (def-use-format-sym sym) "\n"
@@ -263,6 +266,7 @@ the symbol."
           (forward-line 2)
           (setq buffer-read-only t))))))
 
+;;;###autoload
 (defun def-use-list-view-ref ()
   "Finds references on the current line and shows in another window."
   (interactive)
@@ -275,6 +279,7 @@ the symbol."
       (def-use-goto-ref (car (nth idx def-use-list-ref-to-overlay-alist)) t)
       (switch-to-buffer-other-window b))))
 
+;;;###autoload
 (defun def-use-list-view-mark-all ()
   "Visits all the references and marks them."
   (interactive)
@@ -288,12 +293,13 @@ the symbol."
                    (def-use-goto-ref (car ref-overlay) t)
                    (setcdr ref-overlay
                            (def-use-create-overlay
-                             length
-                             (def-use-ref-pos (car ref-overlay))
-                             (- def-use-priority 1)
-                             'def-use-mark-face)))))
+                            length
+                            (def-use-ref-pos (car ref-overlay))
+                            (- def-use-priority 1)
+                            'def-use-mark-face)))))
               def-use-list-ref-to-overlay-alist)))))
 
+;;;###autoload
 (defun def-use-list-view-unmark-all ()
   "Kills all the marks associated with the list view."
   (interactive)
@@ -308,6 +314,7 @@ the symbol."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Info
 
+;;;###autoload
 (defun def-use-show-msg (&optional copy-to-kill-ring)
   "Shows the message for the symbol under the cursor.  With a prefix
 argument the message is also inserted to the `kill-ring'."
@@ -319,6 +326,7 @@ argument the message is also inserted to the `kill-ring'."
       (when (and (def-use-sym-msg sym))
         (kill-new (def-use-sym-msg sym))))))
 
+;;;###autoload
 (defun def-use-show-info ()
   "Shows info on the symbol under the cursor."
   (interactive)
@@ -425,6 +433,7 @@ argument the message is also inserted to the `kill-ring'."
             (when msg
               (message "%s" msg))))))))
 
+;;;###autoload
 (defun def-use-highlight-current ()
   "Highlights the symbol at the point."
   (interactive)
@@ -474,6 +483,7 @@ argument the message is also inserted to the `kill-ring'."
     (when cons
       (setcdr cons def-use-mode-map))))
 
+;;;###autoload
 (define-minor-mode def-use-mode
   "Minor mode for highlighting and navigating definitions and uses.
 

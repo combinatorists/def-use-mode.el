@@ -83,10 +83,12 @@
              . ,(function def-use-show-dus-del))))
     result))
 
+;;;###autoload
 (define-derived-mode def-use-show-dus-mode fundamental-mode "Def-Use-DUS"
   "Major mode for browsing def-use sources."
   :group 'def-use-dus)
 
+;;;###autoload
 (defun def-use-show-dus ()
   "Show a list of def-use sources."
   (interactive)
@@ -115,6 +117,7 @@
           (setq buffer-read-only t)
           (goto-char point))))))
 
+;;;###autoload
 (defun def-use-show-dus-del ()
   "Kill the def-use source on the current line."
   (interactive)
